@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/css/index.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+    <div class="header">
+        <h1 style="text-align: center;">오늘 뭐하지?</h1>
+    </div>
+    <div class="button-group">
+        <button id="filter-all" value="All">All</button>
+        <button id="filter-delete" value="전부삭제">모두 삭제</button>
+        </div>
+    <form class="form-container">
+        <input type="text" id="new-task-input" placeholder="할일 입력..." />
+        <button type="submit" id="new-task-btn">추가</button>
+    </form>
+    </div>
+    </div>
+
+    <div class="container">
+        <div class="task-container">
+            <div class="completed-container">
+                <!--<h3 style="color: white;">목록</h3>-->
+                <ul id="completed-list">
+                    <li>
+                        <input class = "checkbox" type="checkbox"/>
+                        <span style="color: white; font-size: 25px;">
+                            갈보
+                        </span>
+                        <div>
+                            <button style="
+                                background-color: #f1c40f;
+                                border: none;color: white;
+                                padding: 10px;margin-left: 10px;
+                                font-size: 15px;cursor: pointer;border-radius: 5px;" 
+                                value="수정">수정</button>
+                            <button style="background-color: #f1c40f;
+                                border: none;
+                                color: white;
+                                padding: 10px;
+                                margin-left: 10px;
+                                font-size: 15px;
+                                cursor: pointer;
+                                border-radius: 5px;" 
+                                value="삭제">삭제</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </div>
+    <script src="app.js"></script>
+</body>
+</html>
+    <script src="./src/js/index.js"></script>
+</body>
+</html>
