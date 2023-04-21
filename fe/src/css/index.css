@@ -68,7 +68,7 @@ cursor: pointer;
 border-radius: 5px;
 }
 
-.task-container {
+.completed-container {
 padding: 10px;
 background-color: #34495e;
 border-radius: 20px;

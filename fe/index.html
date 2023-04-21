@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./src/css/index.css">
-    <title>Document</title>
+    <title>Todo-List</title>
 </head>
 <body>
     <div class="container">
@@ -17,8 +17,8 @@
         <button id="filter-delete" value="전부삭제">모두 삭제</button>
         </div>
     <form class="form-container">
-        <input type="text" id="new-task-input" placeholder="할일 입력..." />
-        <button type="submit" id="new-task-btn">추가</button>
+        <input type="text" id="input" placeholder="할일 입력..." />
+        <button type="submit" id="submit-button">추가</button>
     </form>
     </div>
     </div>
@@ -26,7 +26,6 @@
     <div class="container">
         <div class="task-container">
             <div class="completed-container">
-                <!--<h3 style="color: white;">목록</h3>-->
                 <ul id="completed-list">
                     <li>
                         <input class = "checkbox" type="checkbox"/>
@@ -48,9 +47,6 @@
             </div>
         </div>
         </div>
-    <script src="app.js"></script>
-</body>
-</html>
-    <script src="./src/js/index.js"></script>
+<script src="./src/js/app.js"></script>
 </body>
 </html>
