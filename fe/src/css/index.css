@@ -54,6 +54,17 @@ progress {
     border: 1px solid white;
 }
 
+progress[value]::-webkit-progress-bar,
+progress[value] {
+    background-color: #eee;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+progress[value]::-webkit-progress-value {
+    background-color: #27ae60;
+    transition: all 0.2s ease-out;
+}
+
 .menu-count {
     color: white;
     font-size: 18px;
@@ -115,6 +126,11 @@ padding: 10px;
     font-size: 15px;
     cursor: pointer;
     border-radius: 5px;
+}
+
+.text-through {
+    color: gray;
+    text-decoration: line-through;
 }
 
 input[type="checkbox"] {
