@@ -1,11 +1,14 @@
+
+
 const menuForm = document.querySelector(".form-container");
 const userInput = document.querySelector("#input");
 const submitButton = document.querySelector("#submit-button");
-const todoList = document.querySelector(".task-container");
+const todoList = document.querySelector("#completed-list");
 const deleteAllButton = document.querySelector("#filter-delete");
-const menuCount = document.querySelector('.menu-count');
+const menuCount = document.querySelector(".menu-count");
 const countBar = document.querySelector("#count-bar");
-const checkBox = document.querySelector(".check-box");
+
+
 
 let menu = [];
 
@@ -18,17 +21,16 @@ const menuCounter = () => {
 const render = () => {
     if(userInput.value) {
         menu.push({list:userInput.value});
-        console.log(menu);
     }
     const template = menu.map(item => {
         return `
-        <div class="completed-container">
-        <ul id="completed-list">
             <li class = "list">
-                <input class = "check-box" type="checkbox"/>
-                <span class = "text" style="color: white; font-size: 18px;">
-                    ${item.list}
-                </span>
+                <input class = "checkbox" type="checkbox"/>
+                <label  class = "text"
+                        style="color: white; font-size: 18px; 
+                        for="myCheckbox">
+                        ${item.list}
+                </label>
                 <div class="task-button-box">
                 <button 
                     class="task-button edit" 
@@ -39,9 +41,7 @@ const render = () => {
                     value="삭제">삭제
                 </button>
                 </div>
-            </li>
-        </ul>
-    </div>`
+            </li>`;
     }).join('');
 
 todoList.innerHTML = template;
@@ -57,6 +57,15 @@ const addList = () => {
     if(countBar.value === 10) {
         alert("등록할 수 없습니다!");
         userInput.value = "";
+        return;
+    }
+
+    const duplicatiedValue = menu.find(item => item.list === userInput.value);
+
+    if(duplicatiedValue){
+        alert("이미 있는 목록이잖아요^^");
+        userInput.value = '';
+        return;
     }
     render();
     userInput.value = '';
@@ -64,24 +73,23 @@ const addList = () => {
 
 
 const deleteAllList = () => {
-    confirm("모두 삭제 하시겠습니까?");
-    console.dir(window)
+    if(confirm("모두 삭제 하시겠습니까?")) {
+        todoList.innerHTML = "zzzzz"
+    }
 }
-
-const check = () => {
-    alert("asd")
-}
-
-
-
 
 
 menuForm.addEventListener("submit", (event) => {
     event.preventDefault();
 });
 
+
+
+
 submitButton.addEventListener("click" , addList);
 submitButton.addEventListener("submit" , addList);
 deleteAllButton.addEventListener("click" , deleteAllList);
-checkBox.addEventListener("click" , check)
+
+
+
 

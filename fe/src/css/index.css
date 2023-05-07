@@ -49,6 +49,7 @@ progress {
     -moz-appearance: none;
     appearance: none;
     width: 100%;
+    border-radius: 11px;
     height: 2rem;
     color: white;
     border: 1px solid white;
@@ -57,11 +58,13 @@ progress {
 progress[value]::-webkit-progress-bar,
 progress[value] {
     background-color: #eee;
+    border-radius: 11px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
 progress[value]::-webkit-progress-value {
     background-color: #27ae60;
+    border-radius: 11px;
     transition: all 0.2s ease-out;
 }
 
@@ -97,14 +100,6 @@ cursor: pointer;
 border-radius: 5px;
 }
 
-.completed-container {
-margin-bottom: 15px;
-padding: 3px;
-background-color: #34495e;
-border-radius: 20px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 .task-container ul {
 list-style-type: none;
 padding: 0;
@@ -115,6 +110,8 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 padding: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+border-radius: 10px;
 }
 
 .task-button {
@@ -126,6 +123,10 @@ padding: 10px;
     font-size: 15px;
     cursor: pointer;
     border-radius: 5px;
+}
+
+.list {
+    margin-bottom: 10px;
 }
 
 .text-through {
