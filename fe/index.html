@@ -7,17 +7,25 @@
     <link rel="stylesheet" href="./src/css/index.css">
     <title>Todo-List</title>
 </head>
-<body>
+<body id="body">
+    <div>
+        <label class="switch">
+            <input type="checkbox" id="toggle-switch">
+            <span class="slider round"></span>
+            <span class="moon">🌙</span>
+            <span class="sun">☀️</span>
+        </label>
+    </div>
     <div class="container">
     <div class="header">
-        <h1 style="text-align: center;">오늘 뭐하지?</h1>
+        <h1 id="header-title" style="text-align: center;">오늘 뭐하지?</h1>
     </div>
     <div class="button-group">
         <button id="filter-all" value="All">All</button>
         <button id="filter-delete" value="전부삭제">모두 삭제</button>
         </div>
         <div class="count">
-            <span class="menu-count">
+            <span id="menu-count" class = "text">
                 총 0 / 10개
             </span>
             <progress id="count-bar" max="10" value="0">
