@@ -1,11 +1,10 @@
-
-
+const body = document.querySelector("#body");
 const menuForm = document.querySelector(".form-container");
 const userInput = document.querySelector("#input");
 const submitButton = document.querySelector("#submit-button");
 const todoList = document.querySelector("#completed-list");
 const deleteAllButton = document.querySelector("#filter-delete");
-const menuCount = document.querySelector(".menu-count");
+const menuCount = document.querySelector("#menu-count");
 const countBar = document.querySelector("#count-bar");
 
 
@@ -27,7 +26,7 @@ const render = () => {
             <li class = "list">
                 <input class = "checkbox" type="checkbox"/>
                 <label  class = "text"
-                        style="color: white; font-size: 18px; 
+                        style="font-size: 18px;" 
                         for="myCheckbox">
                         ${item.list}
                 </label>
@@ -51,6 +50,7 @@ menuCounter();
 
 
 const addList = () => {
+
     if(userInput.value === '') {
         return alert("할일을 입력하세요^^");
     }
@@ -92,4 +92,36 @@ deleteAllButton.addEventListener("click" , deleteAllList);
 
 
 
+
+const toggleSwitch = document.querySelector("#toggle-switch");
+const moon = document.querySelector(".moon");
+const sun = document.querySelector(".sun");
+
+toggleSwitch.addEventListener("change", () => {
+    const container = document.querySelector(".container");
+    const header = document.querySelector("#header-title");
+    const text = document.querySelectorAll(".text");
+
+    if (toggleSwitch.checked) {
+    // On 상태 처리
+    moon.style.opacity = 0;
+    sun.style.opacity = 1;
+    container.classList.add("light-mode");
+    header.classList.add("light-mode");
+    body.classList.add("light-mode");
+    for(let i = 0; i < text.length; i++) {
+        text[i].classList.add("light-mode");
+    }
+    }else{
+    // Off 상태 처리
+    moon.style.opacity = 1;
+    sun.style.opacity = 0;
+    header.classList.remove("light-mode");
+    container.classList.remove("light-mode");
+    body.classList.remove("light-mode");
+    for(let i = 0; i < text.length; i++) {
+        text[i].classList.remove("light-mode");
+    }
+    }
+});
 

@@ -7,6 +7,7 @@ box-sizing: border-box;
 body {
 background-color: #2c3e50;
 font-family: Arial, sans-serif;
+transition: all 0.5s;
 }
 
 .container {
@@ -14,8 +15,16 @@ max-width: 600px;
 margin: 25px auto;
 background-color: #2c3e50;
 border-radius: 20px;
-box-shadow: 0 0 10px rgba(255, 255, 255, 0.688);
+box-shadow: 0 0 10px rgba(32, 32, 32, 0.688);
 padding: 20px;
+transition: all 0.5s;
+}
+
+
+.light-mode {
+    background-color: white;
+    color: black;
+    transition: all 0.5s;
 }
 
 .header {
@@ -24,7 +33,9 @@ padding: 10px;
 margin-bottom: 20px;
 }
 
-
+#input {
+    box-shadow: 0 0 10px rgba(77, 77, 77, 0.688);
+}
 
 .button-group {
 display: flex;
@@ -151,6 +162,81 @@ input[type="checkbox"]:checked {
     background-color: #27ae60;
 }
 
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    cursor: pointer;
+}
 
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(33, 32, 32);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.moon, .sun {
+    position: absolute;
+    top: 4px;
+    font-size: 20px;
+    line-height: 1;
+    padding: 4px;
+    width: 26px;
+    text-align: center;
+    color: #fff;
+}
+
+.moon {
+    left: 4px;
+}
+
+.sun {
+    opacity: 0;
+    right: 4px;
+}
 
 
