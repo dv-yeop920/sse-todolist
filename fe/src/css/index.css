@@ -7,7 +7,7 @@ box-sizing: border-box;
 body {
 background-color: #2c3e50;
 font-family: Arial, sans-serif;
-transition: all 0.5s;
+transition: all 0.3s;
 }
 
 .container {
@@ -17,14 +17,14 @@ background-color: #2c3e50;
 border-radius: 20px;
 box-shadow: 0 0 10px rgba(32, 32, 32, 0.688);
 padding: 20px;
-transition: all 0.5s;
+transition: all 0.3s;
 }
 
 
 .light-mode {
 background-color: #eee;
 color: black;
-transition: all 0.5s;
+transition: all 0.3s;
 }
 
 .header {
