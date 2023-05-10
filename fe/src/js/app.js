@@ -4,9 +4,8 @@ const userInput = document.querySelector("#input");
 const submitButton = document.querySelector("#submit-button");
 const todoList = document.querySelector("#completed-list");
 const deleteAllButton = document.querySelector("#filter-delete");
-const menuCount = document.querySelector("#menu-count");
+const menuCount = document.querySelector(".menu-count");
 const countBar = document.querySelector("#count-bar");
-
 
 
 let menu = [];
@@ -43,9 +42,8 @@ const render = () => {
             </li>`;
     }).join('');
 
-todoList.innerHTML = template;
-menuCounter();
-
+    todoList.innerHTML = template;
+    menuCounter();
 }
 
 
@@ -74,9 +72,29 @@ const addList = () => {
 
 const deleteAllList = () => {
     if(confirm("모두 삭제 하시겠습니까?")) {
-        todoList.innerHTML = "zzzzz"
+        todoList.innerHTML = "";
     }
 }
+
+//checkbox 이벤트 함수
+const complete = (event) => {
+    console.log(event);
+    const list = document.querySelector(".text");
+    if(event.target.checked) {
+        list.classList.add("text-through");
+    }else {
+        list.classList.remove("text-through");
+    }
+}
+
+
+//checkbox에 대한 이벤트 위임
+todoList.addEventListener("change" , (event) => {
+    const target = event.target;
+    if(target.classList.contains("checkbox")) {
+        return complete(event);
+    }
+})
 
 
 menuForm.addEventListener("submit", (event) => {
@@ -90,9 +108,7 @@ submitButton.addEventListener("click" , addList);
 submitButton.addEventListener("submit" , addList);
 deleteAllButton.addEventListener("click" , deleteAllList);
 
-
-
-
+//스위치로 바탕화면 dark 모드 light 모드 설정
 const toggleSwitch = document.querySelector("#toggle-switch");
 const moon = document.querySelector(".moon");
 const sun = document.querySelector(".sun");
@@ -109,19 +125,30 @@ toggleSwitch.addEventListener("change", () => {
     container.classList.add("light-mode");
     header.classList.add("light-mode");
     body.classList.add("light-mode");
+    menuCount.classList.add("light-mode");
+    menuCount.classList.remove("menu-count");
     for(let i = 0; i < text.length; i++) {
+        text[i].classList.remove("color-white");
         text[i].classList.add("light-mode");
     }
-    }else{
-    // Off 상태 처리
-    moon.style.opacity = 1;
-    sun.style.opacity = 0;
-    header.classList.remove("light-mode");
-    container.classList.remove("light-mode");
-    body.classList.remove("light-mode");
-    for(let i = 0; i < text.length; i++) {
-        text[i].classList.remove("light-mode");
     }
+
+    if(!toggleSwitch.checked){
+        // Off 상태 처리
+        moon.style.opacity = 1;
+        sun.style.opacity = 0;
+        header.classList.remove("light-mode");
+        container.classList.remove("light-mode");
+        body.classList.remove("light-mode");
+        menuCount.classList.remove("light-mode");
+        menuCount.classList.add("menu-count");
+        for(let i = 0; i < text.length; i++) {
+            text[i].classList.remove("light-mode");
+            text[i].classList.add("color-white");
+        }
     }
+
 });
+
+
 
