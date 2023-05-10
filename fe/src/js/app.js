@@ -73,9 +73,20 @@ const addList = () => {
     userInput.value = '';
 }
 
-const updateList = () => {
-    alert("asd")
+const updateList = (event) => {
+    const listDetail = event.target.closest("li").querySelector(".text");
+    
+        if(event.target.classList.contains("edit")){
+            const modifiedName = prompt('메뉴 수정' , listDetail.innerText);
+            
+        if(modifiedName){
+                return listDetail.innerText = modifiedName;
+        }else{
+            listDetail.innerText = listDetail.innerText;
+        }
+    }
 }
+
 
 const removeList = (event) => {
     const listTag = event.target.closest("li");
