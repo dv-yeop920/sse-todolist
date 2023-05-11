@@ -8,13 +8,18 @@ const countBar = document.querySelector("#count-bar");
 const allButtons = document.querySelector(".button-group");
 
 
-let menu = [];
+menuForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+});
 
 const menuCounter = () => {
     const menuCounted = menu.length;
     countBar.value = menuCounted;
     menuCount.innerText = `총 ${menuCounted} / 10개`;
+    return;
 }
+
+let menu = [];
 
 const render = () => {
     if(userInput.value) {
@@ -27,12 +32,11 @@ const render = () => {
                         type="checkbox"
                         value = "checkbox" 
                         />
-                <label  data-list-id ="${index}"
+                <span  data-list-id ="${index}"
                         class = "text"
-                        style="font-size: 18px;" 
-                        for="checkbox">
+                        style="font-size: 18px;">
                         ${item.list}
-                </label>
+                </span>
                 <div class="task-button-box">
                 <button 
                     class="task-button edit" 
@@ -44,12 +48,11 @@ const render = () => {
                 </button>
                 </div>
             </li>`;
-    }).join('');
+    }).join("");
 
     todoList.innerHTML = template;
     menuCounter();
 }
-
 
 const addList = () => {
 
@@ -77,16 +80,15 @@ const updateList = (event) => {
     const listDetail = event.target.closest("li").querySelector(".text");
     
         if(event.target.classList.contains("edit")){
-            const modifiedName = prompt('메뉴 수정' , listDetail.innerText);
+            const modifiedName = prompt("할일 수정" , listDetail.innerText);
             
         if(modifiedName){
-                return listDetail.innerText = modifiedName;
+            return listDetail.innerText = modifiedName;
         }else{
-            listDetail.innerText = listDetail.innerText;
+            return listDetail.innerText = listDetail.innerText;
         }
     }
 }
-
 
 const removeList = (event) => {
     const listTag = event.target.closest("li");
@@ -94,16 +96,13 @@ const removeList = (event) => {
         listTag.remove();
         menu.pop();
         menuCounter();
+        return;
     }
 }
 
-
-
 //All 과 전부삭제에 대한 이벤트 함수
 const allButton = (event) => {
-    if(event.target.value === "All") {
-        alert("asdasd")
-    }
+
     if(event.target.value === "전부삭제") {
         const listTag = document.querySelectorAll(".list");
         if(confirm("정말 삭제 하시겠습니까?")) {
@@ -114,14 +113,14 @@ const allButton = (event) => {
         }
     }
     menuCounter();
+    return;
 }
-
 
 //checkbox 이벤트 함수
 const complete = (event) => {
-    console.log(event);
+    const listDetail = event.target.closest("li").querySelector(".text");
+    listDetail.classList.toggle("text-through");
 }
-
 
 //checkbox에 대한 이벤트 위임
 todoList.addEventListener("click" , (event) => {
@@ -135,18 +134,13 @@ todoList.addEventListener("click" , (event) => {
     if(target.value === "삭제") {
         return removeList(event);
     }
-})
-
-
-menuForm.addEventListener("submit", (event) => {
-    event.preventDefault();
 });
-
-
 
 allButtons.addEventListener("click" , allButton);
 submitButton.addEventListener("click" , addList);
 submitButton.addEventListener("submit" , addList);
+
+
 
 
 //스위치로 바탕화면 dark 모드 light 모드 설정
@@ -159,35 +153,33 @@ toggleSwitch.addEventListener("change", () => {
     const header = document.querySelector("#header-title");
     const text = document.querySelectorAll(".text");
 
-    if (toggleSwitch.checked) {
-    // On 상태 처리
-    moon.style.opacity = 0;
-    sun.style.opacity = 1;
-    container.classList.add("light-mode");
-    header.classList.add("light-mode");
-    body.classList.add("light-mode");
-    menuCount.classList.add("light-mode");
-    menuCount.classList.remove("menu-count");
-    for(let i = 0; i < text.length; i++) {
-        text[i].classList.remove("color-white");
-        text[i].classList.add("light-mode");
-    }
-    }
-
     if(!toggleSwitch.checked){
         // Off 상태 처리
+        moon.style.opacity = 0;
+        sun.style.opacity = 1;
+        header.classList.remove("dark-mode");
+        container.classList.remove("dark-mode");
+        body.classList.remove("dark-mode");
+        menuCount.classList.remove("dark-mode");
+        for(let i = 0; i < text.length; i++) {
+            text[i].classList.remove("dark-mode");
+        }
+        return;
+    }
+
+    if (toggleSwitch.checked) {
+        // On 상태 처리
         moon.style.opacity = 1;
         sun.style.opacity = 0;
-        header.classList.remove("light-mode");
-        container.classList.remove("light-mode");
-        body.classList.remove("light-mode");
-        menuCount.classList.remove("light-mode");
-        menuCount.classList.add("menu-count");
+        container.classList.add("dark-mode");
+        header.classList.add("dark-mode");
+        body.classList.add("dark-mode");
+        menuCount.classList.add("dark-mode");
         for(let i = 0; i < text.length; i++) {
-            text[i].classList.remove("light-mode");
-            text[i].classList.add("color-white");
+            text[i].classList.add("dark-mode");
         }
-    }
+        return;
+        }
 
 });
 
