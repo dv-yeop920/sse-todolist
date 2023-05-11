@@ -3,8 +3,10 @@ const menuForm = document.querySelector(".form-container");
 const userInput = document.querySelector("#input");
 const submitButton = document.querySelector("#submit-button");
 const todoList = document.querySelector("#completed-list");
-const menuCount = document.querySelector(".menu-count");
+const listCount = document.querySelector(".list-count");
+const listCompleteCount = document.querySelector(".list-complete-count");
 const countBar = document.querySelector("#count-bar");
+const completeCountBar = document.querySelector("#complete-count-bar");
 const allButtons = document.querySelector(".button-group");
 
 
@@ -12,14 +14,22 @@ menuForm.addEventListener("submit", (event) => {
     event.preventDefault();
 });
 
-const menuCounter = () => {
-    const menuCounted = menu.length;
-    countBar.value = menuCounted;
-    menuCount.innerText = `총 ${menuCounted} / 10개`;
+const listCounter = () => {
+    const listCounted = menu.length;
+    countBar.value = listCounted;
+    listCount.innerText = `총 ${listCounted} / 10개`;
+    return;
+}
+
+const completeCounter = () => {
+    const listCounted = completeList.length;
+    completeCountBar.value = listCounted;
+    listCompleteCount.innerText = `완료 ${listCounted} / 10개`;
     return;
 }
 
 let menu = [];
+let completeList = [];
 
 const render = () => {
     if(userInput.value) {
@@ -51,7 +61,7 @@ const render = () => {
     }).join("");
 
     todoList.innerHTML = template;
-    menuCounter();
+    listCounter();
 }
 
 const addList = () => {
@@ -95,7 +105,9 @@ const removeList = (event) => {
     if(confirm("정말 삭제 하시겠습니까?")) {
         listTag.remove();
         menu.pop();
-        menuCounter();
+        listCounter();
+        completeList.pop();
+        completeCounter();
         return;
     }
 }
@@ -109,10 +121,12 @@ const allButton = (event) => {
             for(let i = 0; i < listTag.length; i++) {
                 listTag[i].remove();
                 menu.pop();
+                completeList.pop();
             }
         }
     }
-    menuCounter();
+    listCounter();
+    completeCounter();
     return;
 }
 
@@ -120,13 +134,20 @@ const allButton = (event) => {
 const complete = (event) => {
     const listDetail = event.target.closest("li").querySelector(".text");
     listDetail.classList.toggle("text-through");
+    if(listDetail.classList.contains("text-through")) {
+        completeList.push(listDetail);
+    }
+    if(!listDetail.classList.contains("text-through")) {
+        completeList.pop();
+    }
+    completeCounter();
 }
 
 //checkbox에 대한 이벤트 위임
 todoList.addEventListener("click" , (event) => {
     const target = event.target;
     if(target.value === "checkbox") {
-        return complete(event);
+        complete(event);
     }
     if(target.value === "수정") {
         return updateList(event);
@@ -160,7 +181,7 @@ toggleSwitch.addEventListener("change", () => {
         header.classList.remove("dark-mode");
         container.classList.remove("dark-mode");
         body.classList.remove("dark-mode");
-        menuCount.classList.remove("dark-mode");
+        listCount.classList.remove("dark-mode");
         for(let i = 0; i < text.length; i++) {
             text[i].classList.remove("dark-mode");
         }
@@ -174,7 +195,7 @@ toggleSwitch.addEventListener("change", () => {
         container.classList.add("dark-mode");
         header.classList.add("dark-mode");
         body.classList.add("dark-mode");
-        menuCount.classList.add("dark-mode");
+        listCount.classList.add("dark-mode");
         for(let i = 0; i < text.length; i++) {
             text[i].classList.add("dark-mode");
         }
