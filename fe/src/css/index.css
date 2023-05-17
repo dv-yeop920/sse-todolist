@@ -23,6 +23,8 @@ transition: all 0.3s;
 #container-todo {
 position: sticky;
 top: 10px;
+z-index: 5;
+border-bottom: 4px solid rgba(0, 0, 0, 0.1);
 }
 
 .dark-mode {
@@ -175,6 +177,10 @@ input[type="checkbox"] {
 input[type="checkbox"]:checked {
     border-color: #27ae60;
     background-color: #27ae60;
+}
+#switch-box {
+    position: sticky;
+    top: 10px;
 }
 
 .switch {

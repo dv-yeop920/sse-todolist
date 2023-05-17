@@ -134,13 +134,15 @@ const allButton = (event) => {
 const complete = (event) => {
     const listDetail = event.target.closest("li").querySelector(".text");
     listDetail.classList.toggle("text-through");
+
     if(listDetail.classList.contains("text-through")) {
-        completeList.push(listDetail);
+        completeList.push({list: listDetail});
     }
     if(!listDetail.classList.contains("text-through")) {
         completeList.pop();
     }
     completeCounter();
+    console.log(completeList);
 }
 
 //checkbox에 대한 이벤트 위임
@@ -204,5 +206,10 @@ toggleSwitch.addEventListener("change", () => {
 
 });
 
+//scroll event
+function handleScrollWindow() {
+
+}
+window.addEventListener("scroll" , handleScrollWindow);
 
 
