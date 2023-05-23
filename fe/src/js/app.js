@@ -1,5 +1,7 @@
+import ListApi from "./server/server.js";
+
 const body = document.querySelector("#body");
-const menuForm = document.querySelector(".form-container");
+const listForm = document.querySelector(".form-container");
 const userInput = document.querySelector("#input");
 const submitButton = document.querySelector("#submit-button");
 const todoList = document.querySelector("#completed-list");
@@ -10,12 +12,27 @@ const completeCountBar = document.querySelector("#complete-count-bar");
 const allButtons = document.querySelector(".button-group");
 
 
-menuForm.addEventListener("submit", (event) => {
+
+
+const list = {
+    listDetail:[]
+};
+let completeList = [];
+
+let listDetail = 'listDetail';
+
+
+const init = async () => {
+    render();
+    userInput.value = '';
+};
+
+listForm.addEventListener("submit", (event) => {
     event.preventDefault();
 });
 
 const listCounter = () => {
-    const listCounted = menu.length;
+    const listCounted = list[listDetail].length;
     countBar.value = listCounted;
     listCount.innerText = `총 ${listCounted} / 10개`;
     return;
@@ -28,14 +45,12 @@ const completeCounter = () => {
     return;
 }
 
-let menu = [];
-let completeList = [];
-
-const render = () => {
+const render =  () => {
     if(userInput.value) {
-        menu.push({list:userInput.value});
+        list[listDetail].push({detail:userInput.value});
     }
-    const template = menu.map((item , index) => {
+
+    const template = list[listDetail].map((item , index) => {
         return `
             <li class = "list">
                 <input class = "checkbox"
@@ -45,7 +60,7 @@ const render = () => {
                 <span  data-list-id ="${index}"
                         class = "text"
                         style="font-size: 18px;">
-                        ${item.list}
+                        ${item.detail}
                 </span>
                 <div class="task-button-box">
                 <button 
@@ -62,20 +77,22 @@ const render = () => {
 
     todoList.innerHTML = template;
     listCounter();
+    console.log(list);
 }
 
-const addList = () => {
+const addList =  () => {
+    let userInputValue = userInput.value;
 
-    if(userInput.value === '') {
+    if(userInputValue === '') {
         return alert("할일을 입력하세요^^");
     }
     if(countBar.value === 10) {
         alert("등록할 수 없습니다!");
-        userInput.value = "";
+        userInputValue = "";
         return;
     }
 
-    const duplicatiedValue = menu.find(item => item.list === userInput.value);
+    const duplicatiedValue = list[listDetail].find(item => item.detail === userInputValue);
 
     if(duplicatiedValue){
         alert("이미 있는 목록이잖아요^^");
@@ -104,7 +121,7 @@ const removeList = (event) => {
     const listTag = event.target.closest("li");
     if(confirm("정말 삭제 하시겠습니까?")) {
         listTag.remove();
-        menu.pop();
+        list[listDetail].pop();
         listCounter();
         completeList.pop();
         completeCounter();
@@ -112,7 +129,7 @@ const removeList = (event) => {
     }
 }
 
-//All 과 전부삭제에 대한 이벤트 함수
+//전부삭제에 대한 이벤트 함수
 const allButton = (event) => {
 
     if(event.target.value === "전부삭제") {
@@ -120,13 +137,14 @@ const allButton = (event) => {
         if(confirm("정말 삭제 하시겠습니까?")) {
             for(let i = 0; i < listTag.length; i++) {
                 listTag[i].remove();
-                menu.pop();
+                list[listDetail].pop();
                 completeList.pop();
             }
         }
     }
     listCounter();
     completeCounter();
+    console.log(list);
     return;
 }
 
@@ -206,10 +224,5 @@ toggleSwitch.addEventListener("change", () => {
 
 });
 
-//scroll event
-function handleScrollWindow() {
-
-}
-window.addEventListener("scroll" , handleScrollWindow);
-
+init();
 
