@@ -17,9 +17,12 @@ const allButtons = document.querySelector(".button-group");
 const list = {
     listDetail:[]
 };
-let completeList = [];
+const completeList = {
+    completeDetail:[]
+};
 
 let listDetail = 'listDetail';
+let completeDetail = 'completeDetail';
 
 
 const init = async () => {
@@ -39,7 +42,7 @@ const listCounter = () => {
 }
 
 const completeCounter = () => {
-    const listCounted = completeList.length;
+    const listCounted = completeList[completeDetail].length;
     completeCountBar.value = listCounted;
     listCompleteCount.innerText = `완료 ${listCounted} / 10개`;
     return;
@@ -123,7 +126,7 @@ const removeList = (event) => {
         listTag.remove();
         list[listDetail].pop();
         listCounter();
-        completeList.pop();
+        completeList[completeDetail].pop();
         completeCounter();
         return;
     }
@@ -138,7 +141,7 @@ const allButton = (event) => {
             for(let i = 0; i < listTag.length; i++) {
                 listTag[i].remove();
                 list[listDetail].pop();
-                completeList.pop();
+                completeList[completeDetail].pop();
             }
         }
     }
@@ -151,13 +154,14 @@ const allButton = (event) => {
 //checkbox 이벤트 함수
 const complete = (event) => {
     const listDetail = event.target.closest("li").querySelector(".text");
+
     listDetail.classList.toggle("text-through");
 
     if(listDetail.classList.contains("text-through")) {
-        completeList.push({list: listDetail});
+        completeList[completeDetail].push({detail:listDetail.innerText});
     }
     if(!listDetail.classList.contains("text-through")) {
-        completeList.pop();
+        completeList[completeDetail].pop();
     }
     completeCounter();
     console.log(completeList);
