@@ -12,11 +12,7 @@ const completeCountBar = document.querySelector("#complete-count-bar");
 const allButtons = document.querySelector(".button-group");
 
 
-
-
-const list = {
-    listDetail:[]
-};
+let list;
 const completeList = {
     completeDetail:[]
 };
@@ -24,46 +20,29 @@ const completeList = {
 let listDetail = 'listDetail';
 let completeDetail = 'completeDetail';
 
-
 const init = async () => {
     render();
     userInput.value = '';
+    return;
 };
 
-listForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-});
 
-const listCounter = () => {
-    const listCounted = list[listDetail].length;
-    countBar.value = listCounted;
-    listCount.innerText = `총 ${listCounted} / 10개`;
-    return;
-}
-
-const completeCounter = () => {
-    const listCounted = completeList[completeDetail].length;
-    completeCountBar.value = listCounted;
-    listCompleteCount.innerText = `완료 ${listCounted} / 10개`;
-    return;
-}
-
-const render =  () => {
-    if(userInput.value) {
-        list[listDetail].push({detail:userInput.value});
-    }
-
-    const template = list[listDetail].map((item , index) => {
+const render = async () => {
+    //if(userInput.value) {
+    //    list[listDetail].push({detail:userInput.value});
+    //}
+    list = await ListApi.getAllListByListItem();
+    const template = list['result'].map(item => {
         return `
             <li class = "list">
                 <input class = "checkbox"
                         type="checkbox"
                         value = "checkbox" 
                         />
-                <span  data-list-id ="${index}"
-                        class = "text"
-                        style="font-size: 18px;">
-                        ${item.detail}
+                <span  
+                    class = "text"
+                    style="font-size: 18px;">
+                    ${item.title}
                 </span>
                 <div class="task-button-box">
                 <button 
@@ -83,35 +62,52 @@ const render =  () => {
     console.log(list);
 }
 
-const addList =  () => {
-    let userInputValue = userInput.value;
 
-    if(userInputValue === '') {
+listForm.addEventListener("submit", (event) => {
+    return event.preventDefault();
+});
+
+const listCounter = () => {
+    const listCounted = list['result'].length;
+    countBar.value = listCounted;
+    listCount.innerText = `총 ${listCounted} / 10개`;
+    return;
+}
+
+const completeCounter = () => {
+    const listCounted = completeList[completeDetail].length;
+    completeCountBar.value = listCounted;
+    listCompleteCount.innerText = `완료 ${listCounted} / 10개`;
+    return;
+}
+
+const addList = async () => {
+
+    if(userInput.value === '') {
         return alert("할일을 입력하세요^^");
     }
-    if(countBar.value === 10) {
-        alert("등록할 수 없습니다!");
-        userInputValue = "";
-        return;
-    }
+    //if(countBar.value === 10) {
+    //    return [userInput.value = "" , alert("등록할 수 없습니다!")]
+    //}
 
-    const duplicatiedValue = list[listDetail].find(item => item.detail === userInputValue);
+    const duplicatiedValue = list['result'].find(item => item.title === userInput.value);
 
     if(duplicatiedValue){
         alert("이미 있는 목록이잖아요^^");
-        userInput.value = '';
+        userInput.value = "";
         return;
     }
+    await ListApi.creatList(userInput.value);
     render();
-    userInput.value = '';
+    userInput.value = "";
 }
+
 
 const updateList = (event) => {
     const listDetail = event.target.closest("li").querySelector(".text");
     
         if(event.target.classList.contains("edit")){
             const modifiedName = prompt("할일 수정" , listDetail.innerText);
-            
         if(modifiedName){
             return listDetail.innerText = modifiedName;
         }else{
@@ -122,6 +118,7 @@ const updateList = (event) => {
 
 const removeList = (event) => {
     const listTag = event.target.closest("li");
+
     if(confirm("정말 삭제 하시겠습니까?")) {
         listTag.remove();
         list[listDetail].pop();
@@ -134,7 +131,6 @@ const removeList = (event) => {
 
 //전부삭제에 대한 이벤트 함수
 const allButton = (event) => {
-
     if(event.target.value === "전부삭제") {
         const listTag = document.querySelectorAll(".list");
         if(confirm("정말 삭제 하시겠습니까?")) {
@@ -163,9 +159,12 @@ const complete = (event) => {
     if(!listDetail.classList.contains("text-through")) {
         completeList[completeDetail].pop();
     }
+
     completeCounter();
     console.log(completeList);
 }
+
+
 
 //checkbox에 대한 이벤트 위임
 todoList.addEventListener("click" , (event) => {
@@ -181,13 +180,11 @@ todoList.addEventListener("click" , (event) => {
     }
 });
 
+
 allButtons.addEventListener("click" , allButton);
 submitButton.addEventListener("click" , addList);
-submitButton.addEventListener("submit" , addList);
 
-
-
-
+init();
 //스위치로 바탕화면 dark 모드 light 모드 설정
 const toggleSwitch = document.querySelector("#toggle-switch");
 const moon = document.querySelector(".moon");
@@ -228,5 +225,6 @@ toggleSwitch.addEventListener("change", () => {
 
 });
 
-init();
+
+
 

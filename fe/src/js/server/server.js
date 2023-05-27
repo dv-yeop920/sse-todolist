@@ -34,6 +34,7 @@ const request = async (url , option) => {
     return response.json();
 }
 
+
 const requestWithOutJson = async (url , option) => {
     const response = await fetch( url , option );
     if(!response.ok){
@@ -45,34 +46,44 @@ const requestWithOutJson = async (url , option) => {
 
 
 const ListApi = {
-    getAllListByListItem(listItem){
-        return request(`${BASE_URL}/listItem/${listItem}/list`);
+    getAllListByListItem(){
+        return request(`${BASE_URL}/mainList`);
     },
 
-    creatList(listItem , menuName){
-        return request(
-            `${BASE_URL}/listItem/${listItem}/list`,
-            HTTP_METHOD.POST({name: menuName}));
+    creatList(detail){
+        return request(`${BASE_URL}/insMainList`,
+        HTTP_METHOD.POST(
+        {   
+            title: detail ,
+            checkYn : 'N' , 
+            delYn : 'N'
+        }
+        ));
     },
 
     async modifieListdName(listItem , modifiedmenuName , menuId){
         return request(
-            `${BASE_URL}/listItem/${listItem}/list/${menuId}`,
+            `${BASE_URL}/setMainList/${listItem}${menuId}`,
             HTTP_METHOD.PUT(modifiedmenuName));
     },
 
     async deleteListName(listItem , menuId){
         return requestWithOutJson(
-            `${BASE_URL}/listItem/${listItem}/list/${menuId}`,
-            HTTP_METHOD.DELETE());
+            `${BASE_URL}/setTrashCan/${menuId}`,
+            HTTP_METHOD.PUT());
     },
 
-    async toggleSoldOutList(listItem , menuId){
+    async toggleCompleteList(listItem , menuId){
         return request(
-            `${BASE_URL}/listItem/${listItem}/list/${menuId}/soldOut`,
+            `${BASE_URL}/listItem/${listItem}/menu/${menuId}/soldOut`,
             HTTP_METHOD.PUT());
     }
 }
+
+
+
+
+
 
 
 
